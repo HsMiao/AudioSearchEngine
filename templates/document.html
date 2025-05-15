@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        div.content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-indent: 2em; /* Indent the first line of each paragraph */
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .info {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <audio controls>
+        <source src="{{ url_for('static', filename='store/' ~ path) }}" type="audio/mpeg">
+    </audio>
+    <div class="content">{{ content|safe }}</div> <!-- Added class for content styling -->
+    
+    <p class="info"><strong>Playlist:</strong>
+        <a href="/search?query={{ playlist }}&category=playlist&filter=all">{{ playlist }}</a>
+    </p>
+    <p class="info"><strong>Original Video:</strong>
+        <a href="{{ link }}">{{ name }}</a>
+    </p>
+    <p class="info">
+        <a href="/search?query={{ link }}&category=link&filter=all">Punchlines from the Same Video</a>
+    </p>
+    <p class="info">
+        <a href="/similar?id={{ id }}">Similar Punchlines</a>
+    </p>
+    <!-- Updated the Back to Search Results link to include the query parameter -->
+    <p class="info">
+        <a href="/search?query={{ query }}&category={{ category }}&filter={{ filter }}&page=1">Back to Search Results</a>
+    </p>
+</body>
+</html>

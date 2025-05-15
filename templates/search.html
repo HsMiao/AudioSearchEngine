@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="page-title">
+        <h1>Punchline Search Engine</h1>
+    </div>
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" id="search-input" name="query" placeholder="Please enter your search query: ">
+            <div class="vertical-center">
+                <label for="category-select">Category:</label>
+                <select id="category-select" name="category">
+                    <option value="all" {% if category == "all" %} selected {% endif %}>All</option>
+                    <option value="content" {% if category == "content" %} selected {% endif %}>Content</option>
+                    <option value="playlist"{% if category == "playlist" %} selected {% endif %}>Playlist</option>
+                </select>
+            </div>
+            <div class="vertical-center">
+                <label for="filter-select">Filter:</label>
+                <select id="filter-select" name="filter">
+                    <option value="all">All</option>
+                    <option value="Top-tier humor" {% if filter == "Top-tier humor" %} selected {% endif %}>Top-tier humor</option>
+                    <option value="Genuinely funny" {% if filter == "Genuinely funny" %} selected {% endif %}>Genuinely funny</option>
+                    <option value="Slightly amusing" {% if filter == "Slightly amusing" %} selected {% endif %}>Slightly amusing</option>
+                </select>
+            </div>
+            <div class="horizontal-center">
+                <button type="submit">Search</button>
+                <button id="expansionbtn" type="button">Query Expansion</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div id="expansion"></div>
+    </div>
+
+    <script>
+        // Additional JavaScript for dynamic UI elements
+        function render(res){
+            console.log(res)
+            document.getElementById('expansion').innerHTML = "<bold-text>Query Expansion:</bold-text>" + res
+        }
+        document.getElementById('expansionbtn').addEventListener('click', function() {
+            query = document.getElementById('search-input').value
+            fetch('/expansion?query='+query, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => response.json()).then(data => render(data))
+        })
+    </script>
+</body>
+</html>

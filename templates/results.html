@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result Page</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="page-title">
+        <h1>Punchline Search Engine</h1>
+        <h2>Search Results: </h2>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" id="search-input" name="query" placeholder="Please enter your search query: " value="{{ query }}">
+            <div class="vertical-center">
+                <label for="category-select">Category:</label>
+                <select id="category-select" name="category">
+                    <option value="all" {% if category == "all" %} selected {% endif %}>All</option>
+                    <option value="content" {% if category == "content" %} selected {% endif %}>Content</option>
+                    <option value="playlist"{% if category == "playlist" %} selected {% endif %}>Playlist</option>
+                </select>
+            </div>
+            <div class="vertical-center">
+                <label for="filter-select">Filter:</label>
+                <select id="filter-select" name="filter">
+                    <option value="all">All</option>
+                    <option value="Top-tier humor" {% if filter == "Top-tier humor" %} selected {% endif %}>Top-tier humor</option>
+                    <option value="Genuinely funny" {% if filter == "Genuinely funny" %} selected {% endif %}>Genuinely funny</option>
+                    <option value="Slightly amusing" {% if filter == "Slightly amusing" %} selected {% endif %}>Slightly amusing</option>
+                </select>
+            </div>
+            <div class="horizontal-center">
+                <button type="submit">Search</button>
+                <button id="expansionbtn" type="button">Query Expansion</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div id="expansion"></div>
+    </div>
+
+    <div>
+        {% if results %}
+            {% for id, title, playlist, content in results %}
+            <div class="card" onclick="window.location.href='/view/{{ id }}?query={{ query }}&category={{ category }}&filter={{ filter }}';" style="cursor: pointer;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ title }}</h5>
+                    <p class="card-info"><strong>{{ playlist }}</strong></p>
+                    <p class="card-text">{{ content }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Pagination and Jump to Page Section -->
+    <div class="pagination-container">
+        <div class="flex-container">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('search', query=query, category=category, filter=filter, page=page-1) if page > 1 else '#' }}">Previous</a>
+                    </li>
+                    {% for i in range(1, total_pages + 1) %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('search', query=query, category=category, filter=filter, page=i) if i != page else '#' }}" {% if page == i %} style="color: purple;" {% endif %}>{{ i }}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('search', query=query, category=category, filter=filter, page=page+1) if page < total_pages else '#' }}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <form action="/search" method="get" class="jump-to-page">
+            <div class="flex-wide">
+                <input width="0px" type="hidden" name="query" value="{{ query }}">
+                <input class="wide" type="number" name="page" min="1" max="{{ total_pages }}" placeholder="Page Number">
+                <button type="submit">Skip</button>
+            </div>
+        </form>
+    </div>
+    
+
+    <script>
+        // Additional JavaScript for dynamic UI elements
+        function render(res){
+            console.log(res)
+            document.getElementById('expansion').innerHTML = "<bold-text>Query Expansion:</bold-text>" + res
+        }
+        document.getElementById('expansionbtn').addEventListener('click', function() {
+            query = document.getElementById('search-input').value
+            fetch('/expansion?query='+query, {
+                method: 'GET',
+            }).then(response => response.text())  
+            .then(text => render(text))
+        })
+    </script>
+</body>
+</html>

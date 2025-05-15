@@ -1,0 +1,182 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+    width: 100%;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+    height: 10vh;
+    align-self: center;
+    align-items: center;
+}
+
+.page-container {
+    width: 80%;
+    margin: auto;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 150px;
+    font-size: large;
+    font-weight: bold;
+    height: 5vh;
+}
+
+.search-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.vertical-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    margin: 2px;
+}
+
+.horizontal-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+    height: 2vh;
+}
+
+.label {
+    /* font-weight: bold; */
+    margin-right: 5px;
+}
+
+input[type="text"], #search-input {
+    padding: 8px;
+    margin-right: 5px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button, .search-form button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    /* float: left; */
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+button:hover, .search-form button:hover {
+    background-color: #0056b3;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.card-body {
+    margin: 10px;
+}
+
+.card-title {
+    color: #0056b3;
+    font-size: 1.1em; /* Increase font size for title */
+}
+
+.card-info {
+    font-size: 0.9em; /* Smaller font size for info */
+    color: #555; /* Slightly lighter color for contrast */
+}
+
+.card-text {
+    color: #666;
+}
+
+.match, .term0 { /* If .term0 needs special styling, define it here */
+    font-weight: bold; /* Make text bold */
+    color: #FF0000; /* Set text color to red */
+}
+
+.pagination-container {
+    display: flex;
+    /* justify-content: space-between;  */
+    width:100%;
+    /* align-items: horizontal;
+     */
+    align-content: space-evenly;
+}
+
+.pagination {
+    width:800px;
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    align-content: space-between;
+}
+
+.pagination li a {
+    padding: 5px; /* Adds clickable padding for accessibility */
+    margin-right: 5px; /* Adds spacing between pagination links */
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.jump-to-page {
+    display: inline-block;
+    /* align-items: center; */
+    width: 300px;
+    /* margin-right: -100px;
+    margin-left: -100px; */
+    margin-top: 10px;
+}
+
+.jump-to-page input[type="number"] {
+    margin-right: 5px;
+    width: 60%;
+}
+
+input[type="text"]:focus, button:focus, a:focus {
+    outline: 2px solid #0056b3; /* Improves visibility when elements are focused */
+}
+
+mark {
+    background-color: rgb(255, 255, 255); /* Set background color to yellow */
+    color: #ff0000; /* Set text color to black */
+    font-weight: bold;
+}
+
+bold-text {
+    font-weight: bold;
+}
+
+flex-container {
+    box-sizing: border-box;
+    width: 600px;
+    /* margin-right: -100px; */
+    display: inline-block;
+    flex-grow: 1;
+}
+
+flex-wide {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items:horizontal;
+}
