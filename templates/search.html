@@ -50,10 +50,8 @@
             query = document.getElementById('search-input').value
             fetch('/expansion?query='+query, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            }).then(response => response.json()).then(data => render(data))
+            }).then(response => response.text())  
+            .then(text => render(text))
         })
     </script>
 </body>
