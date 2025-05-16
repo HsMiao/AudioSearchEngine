@@ -17,6 +17,7 @@
                 <label for="category-select">Category:</label>
                 <select id="category-select" name="category">
                     <option value="all" {% if category == "all" %} selected {% endif %}>All</option>
+                    <option value="title" {% if category == "title" %} selected {% endif %}>Title</option>
                     <option value="content" {% if category == "content" %} selected {% endif %}>Content</option>
                     <option value="playlist"{% if category == "playlist" %} selected {% endif %}>Playlist</option>
                 </select>

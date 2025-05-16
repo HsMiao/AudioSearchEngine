@@ -109,15 +109,18 @@ def search():
             else:
                 ids = [int(i) for i in ids]
             if filter == 'Top-tier humor':
-                results_list = [data[i] for i in ids if data[i]['score'] == '3']
+                results_list = [data[i] for i in ids if int(data[i]['score']) == 3]
             elif filter == 'Genuinely funny':
-                results_list = [data[i] for i in ids if data[i]['score'] >= '2']
+                results_list = [data[i] for i in ids if int(data[i]['score']) >= 2]
             elif filter == 'Slightly amusing':
-                results_list = [data[i] for i in ids if data[i]['score'] >= '1']
+                results_list = [data[i] for i in ids if int(data[i]['score']) >= 1]
             else:
                 results_list = [data[i] for i in ids]
 
     total_pages = int(min(np.ceil(len(results_list) / results_per_page), 10))
+    with open("results.jsonl", 'a') as f:
+        line = {query_text: [i['joke_text'] for i in results_list]}
+        f.write(json.dumps(line) + "\n")
     results_list = extract_data(results_list)[(page - 1) * results_per_page : page * results_per_page]
         
     return render_template('results.html', query=query_text, results=results_list, page=page, total_pages=total_pages, category=category, filter=filter)
